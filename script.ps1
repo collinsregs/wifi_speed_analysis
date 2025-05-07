@@ -9,6 +9,16 @@ $currentDate = Get-Date -Format "yyyy-MM-dd"
 $outputPath = "data/speedtest_results_$currentDate.csv"
 $logPath = "logs/speedtest_log_$currentDate.txt"
 
+# Create the logs directory if it doesn't exist
+if (-not (Test-Path -Path "logs" -PathType Container)) {
+    New-Item -Path "logs" -ItemType Directory | Out-Null
+}
+
+# Create the data directory if it doesn't exist
+if (-not (Test-Path -Path "data" -PathType Container)) {
+    New-Item -Path "data" -ItemType Directory | Out-Null
+}
+
 # Function to write to log file
 function Write-Log {
     param(
@@ -78,3 +88,7 @@ if (-not (Test-Path $logPath)) {
 
 # Run the speedtest
 Test-SpeedTest
+
+
+# to schedule in powershell run the command
+# Register-ScheduledJob -Name "HourlySpeedTest" -ScriptBlock { Set-Location -Path "path_to project" .\script.ps1 } -Trigger (New-JobTrigger -Once -At "00:00" -RepetitionInterval (New-TimeSpan -Hours 1) -RepetitionDuration ([TimeSpan]::MaxValue)) -ScheduledJobOption (New-ScheduledJobOption -RunElevated)
