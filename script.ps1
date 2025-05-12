@@ -36,7 +36,7 @@ function Test-SpeedTest {
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
     
     # Log start of test
-    Write-Log "Starting speedtest"
+    # Write-Log "Starting speedtest"
     
     # Run the speedtest and capture its output
     $scriptOutput = & $scriptPath @scriptArguments
@@ -65,7 +65,7 @@ function Test-SpeedTest {
                     $csvData | Export-Csv -Path "temp.csv" -NoTypeInformation
                     Get-Content "temp.csv" | Select-Object -Skip 1 | Add-Content -Path $outputPath
                     Remove-Item -Path "temp.csv"
-                    Write-Log "Appended to existing file: $outputPath"
+                    # Write-Log "Appended to existing file: $outputPath"
                 }
                 
             } else {
